@@ -635,86 +635,86 @@
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
+// العد التنازلي
+const examDate1 = new Date(); // التاريخ الحالي
+examDate1.setHours(8, 0, 0, 0); // الساعة 8 صباحًا (الفترة الأولى)
 
-        // العد التنازلي
-        const examDate1 = new Date(); // التاريخ الحالي
-        examDate1.setHours(8, 0, 0, 0); // الساعة 8 صباحًا (الفترة الأولى)
+const examDate2_9 = new Date(); // التاريخ الحالي
+examDate2_9.setHours(10, 0, 0, 0); // الساعة 10 صباحًا (الفترة الثانية: الصفوف 9/1 إلى 9/4)
 
-        const examDate2_9 = new Date(); // التاريخ الحالي
-        examDate2_9.setHours(10, 0, 0, 0); // الساعة 10 صباحًا (الفترة الثانية: الصفوف 9/1 إلى 9/4)
+const examDate2_10 = new Date(); // التاريخ الحالي
+examDate2_10.setHours(11, 0, 0, 0); // الساعة 11 صباحًا (الفترة الثانية: الصفوف 10/1 إلى 10/5)
 
-        const examDate2_10 = new Date(); // التاريخ الحالي
-        examDate2_10.setHours(11, 0, 0, 0); // الساعة 11 صباحًا (الفترة الثانية: الصفوف 10/1 إلى 10/5)
+const examDuration1_short = 1.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الأولى (ساعة ونصف)
+const examDuration1_long = 2.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الأولى (ساعتان ونصف)
+const examDuration2_short = 2 * 60 * 60 * 1000; // مدة الاختبار للفترة الثانية (ساعتان)
+const examDuration2_long = 2.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الثانية (ساعتان ونصف)
+const countdownCells = document.querySelectorAll(".countdown-cell");
 
-        const examDuration1 = 1.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الأولى: ساعة ونصف
-        const examDuration2 = 2 * 60 * 60 * 1000; // مدة الاختبار للفترة الثانية: ساعتان
-        const countdownCells = document.querySelectorAll(".countdown-cell");
+function updateCountdown() {
+    const now = new Date();
+    const activePeriod = document.querySelector(".period-buttons button.active").textContent;
 
-        function updateCountdown() {
-            const now = new Date();
-            const activePeriod = document.querySelector(".period-buttons button.active").textContent;
+    if (activePeriod.includes("الفترة الأولى")) {
+        const rows = document.querySelectorAll("#examTable1 tbody tr");
+        rows.forEach(row => {
+            const grade = row.querySelector("td:first-child").textContent;
+            const timeDifference = examDate1 - now;
+            const examDuration = grade.startsWith("10") ? examDuration1_long : examDuration1_short;
 
-            if (activePeriod.includes("الفترة الأولى")) {
-                const timeDifference = examDate1 - now;
+            if (timeDifference > 0) {
+                // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
+                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-                if (timeDifference > 0) {
-                    // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-                    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+                row.querySelector(".countdown-cell").textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else if (timeDifference + examDuration > 0) {
+                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
+                const remainingTime = timeDifference + examDuration;
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-                    countdownCells.forEach(cell => {
-                        cell.textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    });
-                } else if (timeDifference + examDuration1 > 0) {
-                    // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                    const remainingTime = timeDifference + examDuration1;
-                    const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                    countdownCells.forEach(cell => {
-                        cell.textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    });
-                } else {
-                    // بعد انتهاء الاختبار
-                    countdownCells.forEach(cell => {
-                        cell.textContent = "انتهى الوقت";
-                    });
-                    clearInterval(countdownInterval);
-                }
-            } else if (activePeriod.includes("الفترة الثانية")) {
-                const rows = document.querySelectorAll("#examTable2 tbody tr");
-                rows.forEach(row => {
-                    const grade = row.querySelector("td:first-child").textContent;
-                    const examDate = grade.startsWith("9") ? examDate2_9 : examDate2_10;
-                    const timeDifference = examDate - now;
-
-                    if (timeDifference > 0) {
-                        // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-                        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-                        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-                        row.querySelector(".countdown-cell").textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    } else if (timeDifference + examDuration2 > 0) {
-                        // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                        const remainingTime = timeDifference + examDuration2;
-                        const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                        row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    } else {
-                        // بعد انتهاء الاختبار
-                        row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
-                    }
-                });
+                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                // بعد انتهاء الاختبار
+                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
             }
-        }
+        });
+    } else if (activePeriod.includes("الفترة الثانية")) {
+        const rows = document.querySelectorAll("#examTable2 tbody tr");
+        rows.forEach(row => {
+            const grade = row.querySelector("td:first-child").textContent;
+            const examDate = grade.startsWith("9") ? examDate2_9 : examDate2_10;
+            const examDuration = grade.startsWith("9") ? examDuration2_short : examDuration2_long;
+            const timeDifference = examDate - now;
 
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown(); // تحديث العد التنازلي فورًا
+            if (timeDifference > 0) {
+                // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
+                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                row.querySelector(".countdown-cell").textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else if (timeDifference + examDuration > 0) {
+                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
+                const remainingTime = timeDifference + examDuration;
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                // بعد انتهاء الاختبار
+                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
+            }
+        });
+    }
+}
+
+const countdownInterval = setInterval(updateCountdown, 1000);
+updateCountdown(); // تحديث العد التنازلي فورًا
     </script>
 </body>
 </html>
