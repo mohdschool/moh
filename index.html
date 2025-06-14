@@ -1,1929 +1,253 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كشف مراقبة امتحانات الفصل الدراسي الأول</title>
+    <title>جدول امتحانات دبلوم التعليم العام - الفصل الثاني - الدور الأول</title>
     <style>
-        /* تنسيق عام */
+        /* التصميم العام */
         body {
-            font-family: 'Cairo', sans-serif;
-            direction: rtl;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298); /* تدرج لوني احترافي */
+            color: #fff;
+            text-align: center;
             margin: 0;
             padding: 0;
-            color: #333;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* شريط التنقل */
-        .navbar {
-            background-color: #34495e;
-            padding: 10px 20px;
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 1.1rem;
-        }
-
-        .navbar a:hover {
-            color: #1abc9c;
-        }
-
-        /* وضع الليل */
-        body.dark-mode {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: #fff;
-        }
-
-        body.dark-mode table {
-            background: #2c3e50;
-            color: #fff;
-        }
-
-        body.dark-mode th {
-            background-color: #1abc9c;
-        }
-
-        body.dark-mode td {
-            background-color: #34495e;
-        }
-
-        body.dark-mode tr:hover td {
-            background-color: #1abc9c;
-        }
-
-        /* تنسيق الجدول */
-        table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: #fff;
-            border-radius: 10px;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+            100% { background: linear-gradient(135deg, #2a5298, #1e3c72); }
         }
 
-        table.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #34495e;
-            color: #fff;
-            font-size: 1.1rem;
-        }
-
-        td {
-            background-color: #f9f9f9;
-        }
-
-        /* تأثيرات عند تحويم الماوس */
-        tr:hover td {
-            background-color: #ecf0f1;
-            transition: background-color 0.3s ease;
-        }
-
-        /* زر العودة إلى الأعلى */
-        .scroll-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #34495e;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-        }
-
-        .scroll-top:hover {
-            background-color: #2c3e50;
-        }
-
-        /* تذييل الصفحة */
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #34495e;
-            color: #fff;
-            margin-top: 30px;
-        }
-
-        footer a {
-            color: #1abc9c;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* حقل البحث */
-        .search-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .search-container input {
-            padding: 10px;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-             /* لمسات إبداعية */
-        .header h1::after {
-            content: "";
-            display: block;
-            width: 100px;
-            height: 3px;
-            background-color: #1abc9c;
-            margin: 10px auto;
-        }
-
-        .header h2::before {
-            content: "📅";
-            margin-left: 10px;
-        }
-
-        .header h2::after {
-            content: "📅";
-            margin-right: 10px;
-        }
-
-        .search-container input::placeholder {
-            color: #999;
-        }
-
-        .search-container input:focus {
-            outline: none;
-            border-color: #1abc9c;
-            box-shadow: 0 0 8px rgba(26, 188, 156, 0.5);
-        }
-
-        /* أزرار التبديل بين الفترات */
-        .period-buttons {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .period-buttons button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #34495e;
-            color: #fff;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .period-buttons button.active {
-            background-color: #1abc9c;
-        }
-
-        .period-buttons button:hover {
-            background-color: #2c3e50;
-        }
-    </style>
-    <!-- رابط خط Google Fonts للخط العربي -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كشف مراقبة امتحانات الفصل الدراسي الأول</title>
-    <style>
-        /* تنسيق عام */
-        body {
-            font-family: 'Cairo', sans-serif;
-            direction: rtl;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            margin: 0;
-            padding: 0;
-            color: #333;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* شريط التنقل */
-        .navbar {
-            background-color: #34495e;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 1.1rem;
-        }
-
-        .navbar a:hover {
-            color: #1abc9c;
-        }
-
-        /* وضع الليل */
-        body.dark-mode {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: #fff;
-        }
-
-        body.dark-mode table {
-            background: #2c3e50;
-            color: #fff;
-        }
-
-        body.dark-mode th {
-            background-color: #1abc9c;
-        }
-
-        body.dark-mode td {
-            background-color: #34495e;
-        }
-
-        body.dark-mode tr:hover td {
-            background-color: #1abc9c;
-        }
-
-        /* تنسيق الجدول */
-        table {
+        .container {
+            background: rgba(255, 255, 255, 0.1); /* خلفية شبه شفافة */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 1200px;
             width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        table.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #34495e;
+        h1 {
             color: #fff;
-            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
-        td {
-            background-color: #f9f9f9;
-        }
-
-        /* تأثيرات عند تحويم الماوس */
-        tr:hover td {
-            background-color: #ecf0f1;
-            transition: background-color 0.3s ease;
-        }
-
-        /* زر العودة إلى الأعلى */
-        .scroll-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #34495e;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-        }
-
-/* تنسيق الجداول للأجهزة المحمولة */
-@media (max-width: 768px) {
-    table {
-        width: 100%;
-        display: block;
-        overflow-x: auto; /* يجعل الجدول قابلاً للتمرير أفقياً */
-        white-space: nowrap; /* يمنع التفاف النص */
-    }
-
-    th, td {
-        padding: 8px; /* تقليل الحشو لتناسب الشاشات الصغيرة */
-        font-size: 0.9rem; /* تصغير حجم الخط */
-    }
-
-    .day-buttons button {
-        padding: 8px 12px; /* تصغير حجم الأزرار */
-        font-size: 0.9rem; /* تصغير حجم الخط في الأزرار */
-        margin: 5px; /* تقليل المسافة بين الأزرار */
-    }
-
-    .period-buttons button {
-        padding: 8px 12px; /* تصغير حجم الأزرار */
-        font-size: 0.9rem; /* تصغير حجم الخط في الأزرار */
-        margin: 5px; /* تقليل المسافة بين الأزرار */
-    }
-}
-        .scroll-top:hover {
-            background-color: #2c3e50;
-        }
-/* تنسيق أزرار الأيام للأجهزة المحمولة */
-@media (max-width: 768px) {
-    .day-buttons {
-        display: flex;
-        flex-direction: column; /* يجعل الأزرار تظهر بشكل عمودي */
-        align-items: center; /* توسيط الأزرار */
-    }
-
-    .day-buttons button {
-        width: 80%; /* يجعل الأزرار تأخذ عرضًا أكبر */
-        margin: 5px 0; /* زيادة المسافة بين الأزرار */
-    }
-}
-        /* تنسيق الزر النشط (اليوم المختار) */
-.day-buttons button.active {
-    background-color: #1abc9c; /* لون الخلفية */
-    color: #fff; /* لون النص */
-    box-shadow: 0 0 10px rgba(26, 188, 156, 0.7); /* تأثير مضيء */
-    transform: scale(1.05); /* تكبير الزر قليلاً */
-    transition: all 0.3s ease; /* إضافة انتقال سلس */
-}
-
-/* تأثيرات عند تحويم الماوس */
-.day-buttons button:hover {
-    background-color: #2c3e50; /* لون الخلفية عند التحويم */
-    color: #fff; /* لون النص عند التحويم */
-    transform: scale(1.05); /* تكبير الزر قليلاً */
-    transition: all 0.3s ease; /* إضافة انتقال سلس */
-}
-        /* تذييل الصفحة */
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #34495e;
-            color: #fff;
-            margin-top: 30px;
-        }
-
-        footer a {
-            color: #1abc9c;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* حقل البحث */
-        .search-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .search-container input {
-            padding: 10px;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        /* رأس الصفحة مع الشعار */
         .header {
-            text-align: center;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
         }
-
-        .header img {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 10px;
+        .header .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* جعل الشعار دائريًا */
+            object-fit: cover; /* للحفاظ على نسبة الشعار */
+            transition: transform 0.3s ease;
         }
-
-        .header h1 {
-            margin: 0;
-            font-size: 2rem;
-            color: #34495e;
+        .header .logo:hover {
+            transform: rotate(10deg);
         }
-
-        .header h2 {
-            margin: 5px 0 0;
-            font-size: 1.5rem;
-            color: #666;
-        }
-
-        /*  نص " تم الإعداد بواسطة لجنة إدارة الاختبارات بمدرسة محمد بن سليمان الغافري" */
-        .credit {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 1.2rem;
-            color: #34495e;
+        .header .date-time {
+            display: flex;
+            gap: 20px;
+            font-size: 24px;
             font-weight: bold;
         }
-
-        .credit span {
-            color: #1abc9c;
+        .header .date-time .date {
+            color: #ffdd57; /* لون ذهبي */
+        }
+        .header .date-time .time {
+            color: #4cd137; /* لون أخضر */
         }
 
-        /* لمسات إبداعية */
-        .header h1::after {
-            content: "";
-            display: block;
-            width: 100px;
-            height: 3px;
-            background-color: #1abc9c;
-            margin: 10px auto;
+        .school-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffdd57; /* لون ذهبي */
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .header h2::before {
-            content: "📅";
-            margin-left: 10px;
-        }
-
-        .header h2::after {
-            content: "📅";
-            margin-right: 10px;
-        }
-
-        .search-container input::placeholder {
-            color: #999;
-        }
-
-        .search-container input:focus {
-            outline: none;
-            border-color: #1abc9c;
-            box-shadow: 0 0 8px rgba(26, 188, 156, 0.5);
-        }
-
-        /* أزرار التبديل بين الأيام */
-        .day-buttons {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .day-buttons button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #34495e;
+        .exam-info {
+            margin-top: 30px;
+            font-size: 24px;
             color: #fff;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        .day-buttons button.active {
-            background-color: #1abc9c;
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .countdown-container .message {
+            font-size: 24px;
+            color: #ffdd57; /* لون ذهبي */
+        }
+        .countdown {
+            font-size: 48px;
+            color: #ff6b6b; /* لون أحمر */
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        .day-buttons button:hover {
-            background-color: #2c3e50;
-        }
-
-        /* أزرار التبديل بين الفترات (خاصة بيوم الأحد) */
-        .period-buttons {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .period-buttons button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #34495e;
-            color: #fff;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .period-buttons button.active {
-            background-color: #1abc9c;
-        }
-
-        .period-buttons button:hover {
-            background-color: #2c3e50;
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            h1 { font-size: 28px; }
+            .header .date-time { font-size: 20px; }
+            .countdown { font-size: 36px; }
+            .exam-info { font-size: 20px; }
+            .countdown-container .message { font-size: 20px; }
+            .school-name { font-size: 24px; }
         }
     </style>
-    <!-- رابط خط Google Fonts للخط العربي -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet"> <!-- خط عربي -->
 </head>
 <body>
 
- <!-- شريط التنقل -->
-<div class="navbar">
-    <div>
-        <a href="#">الصفحة الرئيسية</a>
-        <a href="https://mohdschool.github.io/7211/" target="_blank">برنامج الجدول الرقمي للاختبارات</a> <!-- تم التعديل هنا -->
-    </div>
-    <button onclick="toggleDarkMode()">🌙</button>
-</div>
-
-    <!-- رأس الصفحة مع الشعار -->
-    <div class="header">
-        <img src="https://e.top4top.io/p_3302it4a31.jpg" alt="شعار المدرسة">
-        <h1>كشف مراقبة امتحانات الفصل الدراسي الأول</h1>
-        <h2>اختر اليوم لعرض الكشف</h2>
-    </div>
-
-    <!-- أزرار التبديل بين الأيام -->
-    <div class="day-buttons">
-        <button onclick="showDay('sunday')" class="active">كشف الأحد</button>
-        <button onclick="showDay('monday')">كشف الإثنين</button>
-        <button onclick="showDay('tuesday')">كشف الثلاثاء</button>
-        <button onclick="showDay('wednesday')">كشف الأربعاء</button>
-    </div>
-
-    <!-- نص "تم الإعداد بواسطة لجنة إدارة الامتحانات " -->
-    <div class="credit">
-        تم الإعداد بواسطة <span>لجنة إدارة الامتحانات بمدرسة محمد بن سليمان الغافري </span>
-    </div>
-
-    <!-- حقل البحث -->
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="ابحث عن اسم أو صف..." oninput="searchTable()">
-    </div>
-
-    <!-- جدول يوم الأحد -->
-    <div id="sunday" class="day-table">
-        <!-- أزرار التبديل بين الفترات (خاصة بيوم الأحد) -->
-        <div class="period-buttons">
-            <button onclick="showPeriod('period1')" class="active">الفترة الأولى</button>
-            <button onclick="showPeriod('period2')">الفترة الثانية</button>
+    <div class="container">
+        <div class="header">
+            <div class="date-time">
+                <div class="time" id="time"></div>
+            </div>
+            <img src="https://e.top4top.io/p_3302it4a31.jpg" alt="شعار المدرسة" class="logo">
+            <div class="date-time">
+                <div class="date" id="date"></div>
+            </div>
         </div>
 
-       <!-- جدول الفترة الأولى -->
-    <div id="period1" class="period-table">
-        <table id="examTable1">
-            <thead>
-                <tr>
-                    <th>الصف</th>
-                    <th>الاسم</th>
-                    <th>الوقت المتبقي</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- بيانات الفترة الأولى -->
-                <tr>
-                    <td>5/1</td>
-                    <td>أحمد بن خميس بن عبدالله الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>5/2</td>
-                    <td>عادل بن سعيد بن راشد الشكيلي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                 </tr>
-                <tr>
-                    <td>5/3</td>
-                    <td>هشام بن محمد بن هلال المقبالي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>5/4</td>
-                    <td>محمود بن حمد بن سعد الغربي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>5/5</td>
-                    <td>عبد الرحمن بن محمد البدري رجب</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/1</td>
-                    <td>وليد بن صالح بن خميس الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/2</td>
-                    <td>علي بن سالم بن محمد الزرعي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/3</td>
-                    <td>بدر بن ناصر بن راشد الفارسي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/4</td>
-                    <td>أحمد بن خليفة بن محمد الصرخي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/5</td>
-                    <td>حميد بن سيف بن حميد الشملي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/1</td>
-                    <td>علي بن خلفان بن سعيد الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/2</td>
-                    <td>أحمد بن سرحان الفارسي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/3</td>
-                    <td>حمد بن راشد بن عبدالله الجابري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/4</td>
-                    <td>حمد بن عبدالله بن سعيد السكيتي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/1</td>
-                    <td>مجدي بن مبارك بن جمعان الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/2</td>
-                    <td>محمد بن حامد بن حمود الناصري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/3</td>
-                    <td>سالم بن راشد بن عامر الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/4</td>
-                    <td>محمد بن سعد بن جمعة العريمي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/1</td>
-                    <td>أحمد بن سيف بن حميد الشملي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/1</td>
-                    <td>أحمد بن ناصر بن حميد الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/2</td>
-                    <td>خالد بن حميد بن محمد الشهومي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/2</td>
-                    <td>حمود بن سعيد بن خلفان السيفي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/3</td>
-                    <td>زايد بن خلفان بن صالح المقبالي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/3</td>
-                    <td>عادل بن سليم بن عبيد العبري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/4</td>
-                    <td>سعيد بن مسلم بن سالم الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/4</td>
-                    <td>رضا بن مصطفى خميري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/1</td>
-                    <td>حمد بن سيف بن خلف الخيالي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/2</td>
-                    <td>خليفة بن سالم الغريبي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/3</td>
-                    <td>محمد بن خلف بن سيف العبري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/4</td>
-                    <td>بشير بن حمد بن سنان المعمري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/5</td>
-                    <td>درويش بن خلفان بن هشام الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
+        <h1>جدول امتحانات دبلوم التعليم العام - الفصل الثاني - الدور الأول</h1>
 
-                <!-- باقي البيانات -->
-            </tbody>
-        </table>
-    </div>
+        <div class="school-name">
+            مدرسة محمد بن سليمان الغافري للتعليم الأساسي
+        </div>
 
-    <!-- جدول الفترة الثانية -->
-    <div id="period2" class="period-table" style="display: none;">
-        <table id="examTable2">
-            <thead>
-                <tr>
-                    <th>الصف</th>
-                    <th>الاسم</th>
-                    <th>الوقت المتبقي</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- بيانات الفترة الثانية -->
-                <tr>
-                    <td>9/1</td>
-                    <td>خليفه بن سعيد بن ماجد المعمري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/1</td>
-                    <td>زايد بن راشد بن حمدان الجابري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/2</td>
-                    <td>أحمد بن سعيد بن راشد الحاتمي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/2</td>
-                    <td>غديّر بن مصبح بن سيف القتبي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/3</td>
-                    <td>سليم بن سعيد بن سليم اليعقوبي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/3</td>
-                    <td>محسن بن حمد بن سعيد الشبنوتي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/4</td>
-                    <td>محمد بن سيف بن سرحان العلوي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/4</td>
-                    <td>ياسر بن حميد بن جبر المعمري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/1</td>
-                    <td>أيمن محمد بكر محمد	</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/1</td>
-                    <td>محمد بن سعد بن جمعه العريمي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/2</td>
-                    <td>محمود بن حمد بن ساعد الغاربي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/2</td>
-                    <td>مصعب بن عوض بن حمد السكيتي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/3</td>
-                    <td>نايف بن عبدالله بن سعيد اليعقوبي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/3</td>
-                    <td>محمد بن سيف بن سعيد الغافري</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/4</td>
-                    <td>علي بن سالم بن محمد الزرعي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/4</td>
-                    <td>معاذ بن مرزوق بن خليفه اليعقوبي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/5</td>
-                    <td>خالد بن حميد بن محمد الشهومي</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
+        <div class="exam-info">
+            <p><strong>المادة:</strong>  الرياضيات الأساية / الرياضيات المتقدمة</p>
+            <p><strong>موعد الاختبار:</strong> يوم الأحد بتاريخ 16/6/2025م</p>
+            <p><strong>مدة الاختبار:</strong> 3 ساعات</p>
+        </div>
 
-                </tbody>
-            </table>
+        <div class="countdown-container">
+            <div class="message" id="message">الوقت المتبقي لبدء الاختبار:</div>
+            <div id="countdown" class="countdown">
+                <!-- العد التنازلي سيظهر هنا -->
+            </div>
         </div>
     </div>
 
-    <!-- جدول يوم الإثنين -->
-    <div id="monday" class="day-table" style="display: none;">
-        <table id="examTableMonday">
-            <thead>
-                <tr>
-                    <th>الصف</th>
-                    <th>الاسم</th>
-                    <th>المادة</th>
-                    <th>الوقت المتبقي</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- بيانات يوم الإثنين -->
-                <tr>
-                    <td>5/1</td>
-                    <td>عبدالله بن سعيد بن سليمان الشكيلي</td>
-                    <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>5/2</td>
-                    <td>عبدالله بن هلال بن علي الغافري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                 </tr>
-                <tr>
-                    <td>5/3</td>
-                    <td>علي بن خلفان بن سعيد الغافري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>5/4</td>
-                    <td>مصعب بن عوض بن حمد السكيتي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>5/5</td>
-                    <td>ياسر بن حميد بن جبر المعمري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/1</td>
-                    <td>حمد بن عبدالله بن سعيد السكيتي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/2</td>
-                    <td>خالد بن سعيد بن محمد الكلباني</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/3</td>
-                    <td>حمود بن سعيد بن خلفان السيفي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/4</td>
-                    <td>سليم بن سعيد بن سليم اليعقوبي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>6/5</td>
-                    <td>خليفه بن سيف بن سالم الغريبي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/1</td>
-                    <td>أمير بن حامد بن سيف الناصري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/2</td>
-                    <td>أيمن محمد بكر محمد</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/3</td>
-                    <td>أحمد بن خميس بن عبدالله الغافري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>7/4</td>
-                    <td>حمد بن راشد بن عبدالله الجابري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/1</td>
-                    <td>أحمد بن سيف بن حميد الشملي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/2</td>
-                    <td>حميد بن سيف بن حميد الشملي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/3</td>
-                    <td>بشير بن حمد بن سنان المعمري</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>8/4</td>
-                    <td>معاذ بن مرزوق بن خليفه اليعقوبي</td>
-                   <td>الدراسات الاجتماعية</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/1</td>
-                    <td>وليد بن صالح بن خميس الغافري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/1</td>
-                    <td>هشام بن محمد بن هلال المقبالي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/2</td>
-                    <td>أحمد بن ناصر بن حميد الغافري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/2</td>
-                    <td>عادل بن سليم بن عبيد العبري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/3</td>
-                    <td>محمد بن سيف بن سعيد الغافري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/3</td>
-                    <td>نايف بن عبدالله بن سعيد اليعقوبي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/4</td>
-                    <td>زايد بن خلفان بن صالح المقبالي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>9/4</td>
-                    <td>عبدالرحمن محمد البدري رجب</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/1</td>
-                    <td>بدر بن علي بن خلفان المرشودي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/1</td>
-                    <td>خالد بن حميد بن محمد الشهومي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/2</td>
-                    <td>حمود بن عبدالله بن حمود الغافري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/2</td>
-                    <td>علي بن سالم بن محمد الزرعي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/3</td>
-                    <td>وائل جاد الرب</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/3</td>
-                    <td>بدر بن ناصر بن راشد الفارسي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/4</td>
-                    <td>أحمد بن خليفه بن محمد الصارخي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/4</td>
-                    <td>رضا بن مصطفى خميري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                <tr>
-                    <td>10/5</td>
-                    <td>سعيد بن مسلم بن سالم الغافري</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-                </tr>
-                    <td>10/5</td>
-                    <td>محمود بن حمد بن ساعد الغاربي</td>
-                   <td>الرياضيات</td>
-                    <td class="countdown-cell">--:--:--</td>
-                </tr>
-        </table>
-    </div>
-
-    <!-- جدول يوم الثلاثاء -->
-    <div id="tuesday" class="day-table" style="display: none;">
-        <table id="examTableTuesday">
-            <thead>
-                <tr>
-                    <th>الصف</th>
-                    <th>الاسم</th>
-                    <th>المادة</th>
-                    <th>الوقت المتبقي</th>
-                </tr>
-            </thead>
-            <tbody>
-              <!-- بيانات يوم الثلاثاء -->
-<tr>
-    <td>5/1</td>
-    <td>ثويني بن سرور بن سعد الغافري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>5/2</td>
-    <td>أحمد بن سرحان الفارسي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>5/3</td>
-    <td>محمد بن سيف بن سعيد الغافري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>5/4</td>
-    <td>بشير بن حمد بن سنان المعمري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>5/5</td>
-    <td>هشام بن محمد بن هلال المقبالي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>6/1</td>
-    <td>خالد بن حميد بن سعيد المحروقي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>6/2</td>
-    <td>عادل بن سليم بن عبيد العبري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>6/3</td>
-    <td>خالد بن حمدان بن سعيد المقرشي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>6/4</td>
-    <td>محمد الحسن الأمير</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>6/5</td>
-    <td>محمد بن سيف بن سرحان العلوي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>7/1</td>
-    <td>بدر بن علي بن خلفان المرشودي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>7/2</td>
-    <td>حمود بن عبدالله بن حمود الغافري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>7/3</td>
-    <td>زايد بن خلفان بن صالح المقبالي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>7/4</td>
-    <td>وليد بن صالح بن خميس الغافري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>8/1</td>
-    <td>وائل جاد الرب</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>8/2</td>
-    <td>عبدالله بن سعيد بن سليمان الشكيلي</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>8/3</td>
-    <td>عبدالله بن هلال بن علي الغافري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>8/4</td>
-    <td>حمد بن راشد بن عبدالله الجابري</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/1</td>
-    <td>أيمن محمد بكر محمد</td>
-    <td>اللغة العربية</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/1</td>
-    <td>أحمد بن سعيد بن راشد الحاتمي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/2</td>
-    <td>زايد بن راشد بن حمدان الجابري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/2</td>
-    <td>مصعب بن عوض بن حمد السكيتي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/3</td>
-    <td>رضا بن مصطفى خميري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/3</td>
-    <td>ياسر بن حميد بن جبر المعمري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/4</td>
-    <td>أحمد بن ناصر بن حميد الغافري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/4</td>
-    <td>خليفه بن سعيد بن ماجد المعمري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/1</td>
-    <td>خليفه بن سيف بن سالم الغريبي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/1</td>
-    <td>أمير بن حامد بن سيف الناصري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/2</td>
-    <td>علي بن خلفان بن سعيد الغافري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/2</td>
-    <td>بدر بن ناصر بن راشد الفارسي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/3</td>
-    <td>خالد بن سعيد بن محمد الكلباني</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/3</td>
-    <td>محسن بن حمد بن سعيد الشبنوتي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/4</td>
-    <td>درويش بن خلفان بن هويشل الغافري</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/4</td>
-    <td>غديّر بن مصبح بن سيف القتبي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/5</td>
-    <td>عادل بن سعيد بن راشد الشكيلي</td>
-    <td>الفيزياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- جدول يوم الأربعاء -->
-    <div id="wednesday" class="day-table" style="display: none;">
-        <table id="examTableWednesday">
-            <thead>
-                <tr>
-                    <th>الصف</th>
-                    <th>الاسم</th>
-                    <th>المادة</th>
-                    <th>الوقت المتبقي</th>
-                </tr>
-            </thead>
-            <tbody>
-             <!-- بيانات يوم الأربعاء -->
-<tr>
-    <td>9/1</td>
-    <td>بدر بن علي بن خلفان المرشودي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/1</td>
-    <td>مجدي بن مبارك بن جمعان الغافري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/2</td>
-    <td>محمد بن حامد بن حمود الناصري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/2</td>
-    <td>أمير بن حامد بن سيف الناصري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/3</td>
-    <td>حمود بن عبدالله بن حمود الغافري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/3</td>
-    <td>حمد بن سيف بن خلف الخيالي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/4</td>
-    <td>سالم بن راشد بن عامر الغافري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>9/4</td>
-    <td>وائل جاد الرب</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/1</td>
-    <td>عبدالله بن سعيد بن سليمان الشكيلي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/1</td>
-    <td>حمد بن عبدالله بن سعيد السكيتي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/2</td>
-    <td>عبدالله بن هلال بن علي الغافري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/2</td>
-    <td>أيمن محمد بكر محمد</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/3</td>
-    <td>خالد بن حميد بن سعيد المحروقي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/3</td>
-    <td>زايد بن راشد بن حمدان الجابري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/4</td>
-    <td>خالد بن حمدان بن سعيد المقرشي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/4</td>
-    <td>محمد بن خلف بن سيف العبري</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/5</td>
-    <td>محمد الحسن الأمير</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>
-<tr>
-    <td>10/5</td>
-    <td>محمد بن سيف بن سرحان العلوي</td>
-    <td>الأحياء</td>
-    <td class="countdown-cell">--:--:--</td>
-</tr>    
-            </tbody>
-        </table>
-    </div>
-
-    <!-- زر العودة إلى الأعلى -->
-    <button class="scroll-top" onclick="scrollToTop()">↑</button>
-
-    <!-- تذييل الصفحة -->
-    <footer>
-        <p>تم تصميم هذه الصفحة بواسطة <a href="#" target="_blank">لجنة إدارة الامتحانات </a> | جميع الحقوق محفوظة لمدرسة محمد بن سليمان الغافري &copy; 2025</p>
-    </footer>
-
-    <!-- JavaScript -->
     <script>
-        // وظيفة التبديل بين الأيام
-        function showDay(day) {
-            const days = document.querySelectorAll(".day-table");
-            const buttons = document.querySelectorAll(".day-buttons button");
+        // تاريخ ووقت الاختبار
+        const examDateTime = new Date(`2025-01-26T08:00:00`); // تاريخ ووقت الاختبار
+        const examDuration = 3; // مدة الاختبار بالساعات
 
-            days.forEach(dayTable => {
-                dayTable.style.display = "none";
-            });
+        let countdownInterval;
 
-            buttons.forEach(button => {
-                button.classList.remove("active");
-            });
+        function startCountdownToExam() {
+            clearInterval(countdownInterval);
 
-            document.getElementById(day).style.display = "block";
-            document.querySelector(`.day-buttons button[onclick="showDay('${day}')"]`).classList.add("active");
-        }
+            const countdownElement = document.getElementById('countdown');
+            const messageElement = document.getElementById('message');
 
-        // وظيفة التبديل بين الفترات (خاصة بيوم الأحد)
-        function showPeriod(period) {
-            const period1 = document.getElementById("period1");
-            const period2 = document.getElementById("period2");
-            const buttons = document.querySelectorAll(".period-buttons button");
+            countdownInterval = setInterval(() => {
+                const now = new Date();
+                const timeLeft = examDateTime - now;
 
-            if (period === "period1") {
-                period1.style.display = "block";
-                period2.style.display = "none";
-                buttons[0].classList.add("active");
-                buttons[1].classList.remove("active");
-            } else if (period === "period2") {
-                period1.style.display = "none";
-                period2.style.display = "block";
-                buttons[0].classList.remove("active");
-                buttons[1].classList.add("active");
-            }
-        }
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    startCountdownForExam();
+                    messageElement.innerHTML = "الوقت المتبقي لانتهاء الاختبار:";
+                } else {
+                    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-        // وظيفة البحث في الجدول
-        function searchTable() {
-            const input = document.getElementById("searchInput").value.toLowerCase();
-            const tables = document.querySelectorAll(".day-table table");
-
-            tables.forEach(table => {
-                const rows = table.querySelectorAll("tbody tr");
-                rows.forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(input) ? "" : "none";
-                });
-            });
-        }
-
-        // وظيفة التبديل بين الوضع النهاري والليلي
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-        }
-
-        // وظيفة إظهار الجدول عند التمرير
-        window.addEventListener("scroll", () => {
-            const tables = document.querySelectorAll("table");
-            tables.forEach(table => {
-                const tablePosition = table.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-
-                if (tablePosition < screenPosition) {
-                    table.classList.add("show");
+                    countdownElement.innerHTML = `
+                        ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية
+                    `;
                 }
-            });
-        });
-
-        // وظيفة العودة إلى الأعلى
-        window.onscroll = function() {
-            const scrollTopButton = document.querySelector('.scroll-top');
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                scrollTopButton.style.display = 'block';
-            } else {
-                scrollTopButton.style.display = 'none';
-            }
-        };
-
-        function scrollToTop() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
+            }, 1000);
         }
 
-        // العد التنازلي ليوم الأحد (الفترة الأولى)
-        const examDateSunday1 = new Date(); // التاريخ الحالي
-        examDateSunday1.setHours(8, 0, 0, 0); // الساعة 8 صباحًا (الفترة الأولى)
+        function startCountdownForExam() {
+            clearInterval(countdownInterval);
 
-        const examDurationSunday1 = 1.5 * 60 * 60 * 1000; // مدة الاختبار (ساعة ونصف)
-        const countdownCellsSunday1 = document.querySelectorAll("#examTableSunday1 .countdown-cell");
+            const countdownElement = document.getElementById('countdown');
+            const messageElement = document.getElementById('message');
+            const endTime = new Date(examDateTime.getTime() + examDuration * 60 * 60 * 1000);
 
-        function updateCountdownSunday1() {
+            countdownInterval = setInterval(() => {
+                const now = new Date();
+                const timeLeft = endTime - now;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.innerHTML = "انتهى وقت الاختبار!";
+                    messageElement.innerHTML = "";
+                } else {
+                    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                    countdownElement.innerHTML = `
+                        ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية
+                    `;
+                }
+            }, 1000);
+        }
+
+        function updateDateTime() {
+            const dateElement = document.getElementById('date');
+            const timeElement = document.getElementById('time');
             const now = new Date();
-            const timeDifference = examDateSunday1 - now;
 
-            if (timeDifference > 0) {
-                // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = now.toLocaleDateString('ar-EG', options);
 
-                countdownCellsSunday1.forEach(cell => {
-                    cell.textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                });
-            } else if (timeDifference + examDurationSunday1 > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const remainingTime = timeDifference + examDurationSunday1;
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                countdownCellsSunday1.forEach(cell => {
-                    cell.textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                });
-            } else {
-                // بعد انتهاء الاختبار
-                countdownCellsSunday1.forEach(cell => {
-                    cell.textContent = "انتهى الوقت";
-                });
-            }
+            timeElement.textContent = now.toLocaleTimeString('ar-EG');
         }
 
-        const countdownIntervalSunday1 = setInterval(updateCountdownSunday1, 1000);
-        updateCountdownSunday1(); // تحديث العد التنازلي فورًا
-
-        // العد التنازلي ليوم الأحد (الفترة الثانية)
-        const examDateSunday2 = new Date(); // التاريخ الحالي
-        examDateSunday2.setHours(10, 0, 0, 0); // الساعة 10 صباحًا (الفترة الثانية)
-
-        const examDurationSunday2 = 2 * 60 * 60 * 1000; // مدة الاختبار (ساعتان)
-        const countdownCellsSunday2 = document.querySelectorAll("#examTableSunday2 .countdown-cell");
-
-        function updateCountdownSunday2() {
-            const now = new Date();
-            const timeDifference = examDateSunday2 - now;
-
-            if (timeDifference > 0) {
-                // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-                countdownCellsSunday2.forEach(cell => {
-                    cell.textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                });
-            } else if (timeDifference + examDurationSunday2 > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const remainingTime = timeDifference + examDurationSunday2;
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                countdownCellsSunday2.forEach(cell => {
-                    cell.textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                });
-            } else {
-                // بعد انتهاء الاختبار
-                countdownCellsSunday2.forEach(cell => {
-                    cell.textContent = "انتهى الوقت";
-                });
-            }
+        // بدء العد التنازلي تلقائيًا
+        const now = new Date();
+        if (now < examDateTime) {
+            startCountdownToExam();
+        } else if (now >= examDateTime && now < new Date(examDateTime.getTime() + examDuration * 60 * 60 * 1000)) {
+            startCountdownForExam();
+        } else {
+            document.getElementById('countdown').innerHTML = "انتهى وقت الاختبار!";
+            document.getElementById('message').innerHTML = "";
         }
 
-        const countdownIntervalSunday2 = setInterval(updateCountdownSunday2, 1000);
-        updateCountdownSunday2(); // تحديث العد التنازلي فورًا
-
-      // العد التنازلي ليوم الإثنين
-const examDateMonday = new Date("2025-01-20T08:00:00"); // 20 يناير 2025 الساعة 8 صباحًا
-
-const examDurationMondayShort = 1.5 * 60 * 60 * 1000; // مدة الاختبار (ساعة ونصف)
-const examDurationMondayLong = 2.5 * 60 * 60 * 1000; // مدة الاختبار (ساعتان ونصف)
-const countdownCellsMonday = document.querySelectorAll("#examTableMonday .countdown-cell");
-
-function updateCountdownMonday() {
-    const now = new Date();
-    const timeDifference = examDateMonday - now;
-
-    if (timeDifference > 0) {
-        // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-        countdownCellsMonday.forEach(cell => {
-            cell.textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        });
-    } else {
-        const rows = document.querySelectorAll("#examTableMonday tbody tr");
-        rows.forEach(row => {
-            const grade = row.querySelector("td:first-child").textContent;
-            const examDuration = grade.startsWith("10") ? examDurationMondayLong : examDurationMondayShort;
-            const remainingTime = timeDifference + examDuration;
-
-            if (remainingTime > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                // بعد انتهاء الاختبار
-                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
-            }
-        });
-    }
-}
-
-const countdownIntervalMonday = setInterval(updateCountdownMonday, 1000);
-updateCountdownMonday(); // تحديث العد التنازلي فورًا
-    // العد التنازلي ليوم الثلاثاء
-const examDateTuesday = new Date("2025-01-21T08:00:00"); // 21 يناير 2025 الساعة 8 صباحًا
-
-const examDurationTuesday_5to8 = 2 * 60 * 60 * 1000; // مدة الاختبار (ساعتان) للصفوف من 5/1 إلى 8/4
-const examDurationTuesday_9 = 1.5 * 60 * 60 * 1000; // مدة الاختبار (ساعة ونصف) للصفوف من 9/1 إلى 9/4
-const examDurationTuesday_10 = 2 * 60 * 60 * 1000; // مدة الاختبار (ساعتان) للصفوف من 10/1 إلى 10/5
-const countdownCellsTuesday = document.querySelectorAll("#examTableTuesday .countdown-cell");
-
-function updateCountdownTuesday() {
-    const now = new Date();
-    const timeDifference = examDateTuesday - now;
-
-    if (timeDifference > 0) {
-        // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-        countdownCellsTuesday.forEach(cell => {
-            cell.textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        });
-    } else {
-        const rows = document.querySelectorAll("#examTableTuesday tbody tr");
-        rows.forEach(row => {
-            const grade = row.querySelector("td:first-child").textContent;
-            let examDuration;
-
-            if (grade.startsWith("5") || grade.startsWith("6") || grade.startsWith("7") || grade.startsWith("8")) {
-                examDuration = examDurationTuesday_5to8; // الصفوف من 5/1 إلى 8/4
-            } else if (grade.startsWith("9")) {
-                examDuration = examDurationTuesday_9; // الصفوف من 9/1 إلى 9/4
-            } else if (grade.startsWith("10")) {
-                examDuration = examDurationTuesday_10; // الصفوف من 10/1 إلى 10/5
-            }
-
-            const remainingTime = timeDifference + examDuration;
-
-            if (remainingTime > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                // بعد انتهاء الاختبار
-                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
-            }
-        });
-    }
-}
-
-const countdownIntervalTuesday = setInterval(updateCountdownTuesday, 1000);
-updateCountdownTuesday(); // تحديث العد التنازلي فورًا
-       // العد التنازلي ليوم الأربعاء
-const examDateWednesday = new Date("2025-01-22T08:00:00"); // 22 يناير 2025 الساعة 8 صباحًا
-
-const examDurationWednesday_9 = 1.5 * 60 * 60 * 1000; // مدة الاختبار (ساعة ونصف) للصفوف من 9/1 إلى 9/4
-const examDurationWednesday_10 = 2 * 60 * 60 * 1000; // مدة الاختبار (ساعتان) للصفوف من 10/1 إلى 10/5
-const countdownCellsWednesday = document.querySelectorAll("#examTableWednesday .countdown-cell");
-
-function updateCountdownWednesday() {
-    const now = new Date();
-    const timeDifference = examDateWednesday - now;
-
-    if (timeDifference > 0) {
-        // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-        countdownCellsWednesday.forEach(cell => {
-            cell.textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        });
-    } else {
-        const rows = document.querySelectorAll("#examTableWednesday tbody tr");
-        rows.forEach(row => {
-            const grade = row.querySelector("td:first-child").textContent;
-            const examDuration = grade.startsWith("9") ? examDurationWednesday_9 : examDurationWednesday_10;
-            const remainingTime = timeDifference + examDuration;
-
-            if (remainingTime > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                // بعد انتهاء الاختبار
-                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
-            }
-        });
-    }
-}
-
-const countdownIntervalWednesday = setInterval(updateCountdownWednesday, 1000);
-updateCountdownWednesday(); // تحديث العد التنازلي فورًا
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
     </script>
-</body>
-</html>
-            </tbody>
-        </table>
-    </div>
 
-    <!-- زر العودة إلى الأعلى -->
-    <button class="scroll-top" onclick="scrollToTop()">↑</button>
-    <!-- JavaScript -->
-    <script>
-        // وظيفة التبديل بين الفترات
-        function showPeriod(period) {
-            const period1 = document.getElementById("period1");
-            const period2 = document.getElementById("period2");
-            const buttons = document.querySelectorAll(".period-buttons button");
-
-            if (period === "period1") {
-                period1.style.display = "block";
-                period2.style.display = "none";
-                buttons[0].classList.add("active");
-                buttons[1].classList.remove("active");
-            } else if (period === "period2") {
-                period1.style.display = "none";
-                period2.style.display = "block";
-                buttons[0].classList.remove("active");
-                buttons[1].classList.add("active");
-            }
-        }
-
-        // وظيفة البحث في الجدول
-        function searchTable() {
-            const input = document.getElementById("searchInput").value.toLowerCase();
-            const tables = document.querySelectorAll(".period-table table");
-
-            tables.forEach(table => {
-                const rows = table.querySelectorAll("tbody tr");
-                rows.forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(input) ? "" : "none";
-                });
-            });
-        }
-
-        // وظيفة التبديل بين الوضع النهاري والليلي
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-        }
-
-        // وظيفة إظهار الجدول عند التمرير
-        window.addEventListener("scroll", () => {
-            const tables = document.querySelectorAll("table");
-            tables.forEach(table => {
-                const tablePosition = table.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-
-                if (tablePosition < screenPosition) {
-                    table.classList.add("show");
-                }
-            });
-        });
-
-        // وظيفة العودة إلى الأعلى
-        window.onscroll = function() {
-            const scrollTopButton = document.querySelector('.scroll-top');
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                scrollTopButton.style.display = 'block';
-            } else {
-                scrollTopButton.style.display = 'none';
-            }
-        };
-
-        function scrollToTop() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-// العد التنازلي
-const examDate1 = new Date(); // التاريخ الحالي
-examDate1.setHours(8, 0, 0, 0); // الساعة 8 صباحًا (الفترة الأولى)
-
-const examDate2_9 = new Date(); // التاريخ الحالي
-examDate2_9.setHours(10, 0, 0, 0); // الساعة 10 صباحًا (الفترة الثانية: الصفوف 9/1 إلى 9/4)
-
-const examDate2_10 = new Date(); // التاريخ الحالي
-examDate2_10.setHours(11, 0, 0, 0); // الساعة 11 صباحًا (الفترة الثانية: الصفوف 10/1 إلى 10/5)
-
-const examDuration1_short = 1.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الأولى (ساعة ونصف)
-const examDuration1_long = 2.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الأولى (ساعتان ونصف)
-const examDuration2_short = 2 * 60 * 60 * 1000; // مدة الاختبار للفترة الثانية (ساعتان)
-const examDuration2_long = 2.5 * 60 * 60 * 1000; // مدة الاختبار للفترة الثانية (ساعتان ونصف)
-const countdownCells = document.querySelectorAll(".countdown-cell");
-
-function updateCountdown() {
-    const now = new Date();
-    const activePeriod = document.querySelector(".period-buttons button.active").textContent;
-
-    if (activePeriod.includes("الفترة الأولى")) {
-        const rows = document.querySelectorAll("#examTable1 tbody tr");
-        rows.forEach(row => {
-            const grade = row.querySelector("td:first-child").textContent;
-            const timeDifference = examDate1 - now;
-            const examDuration = grade.startsWith("10") ? examDuration1_long : examDuration1_short;
-
-            if (timeDifference > 0) {
-                // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else if (timeDifference + examDuration > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const remainingTime = timeDifference + examDuration;
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                // بعد انتهاء الاختبار
-                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
-            }
-        });
-    } else if (activePeriod.includes("الفترة الثانية")) {
-        const rows = document.querySelectorAll("#examTable2 tbody tr");
-        rows.forEach(row => {
-            const grade = row.querySelector("td:first-child").textContent;
-            const examDate = grade.startsWith("9") ? examDate2_9 : examDate2_10;
-            const examDuration = grade.startsWith("9") ? examDuration2_short : examDuration2_long;
-            const timeDifference = examDate - now;
-
-            if (timeDifference > 0) {
-                // قبل بدء الاختبار: عرض الوقت المتبقي لبدء الاختبار
-                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `يبدأ بعد: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else if (timeDifference + examDuration > 0) {
-                // أثناء الاختبار: عرض الوقت المتبقي من الاختبار
-                const remainingTime = timeDifference + examDuration;
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                row.querySelector(".countdown-cell").textContent = `متبقي: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                // بعد انتهاء الاختبار
-                row.querySelector(".countdown-cell").textContent = "انتهى الوقت";
-            }
-        });
-    }
-}
-
-const countdownInterval = setInterval(updateCountdown, 1000);
-updateCountdown(); // تحديث العد التنازلي فورًا    </script>
 </body>
 </html>
