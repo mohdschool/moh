@@ -500,7 +500,7 @@
     <header class="header fade-in">
         <h1 class="float">نظام متابعة امتحانات الدبلوم العام</h1>
         <h2>الفصل الدراسي الثاني - الدور الأول للعام الدراسي ٢٠٢٤/٢٠٢٥ م</h2>
-        <p class="glow">مركزعمربن مسعود للتعليم الأساسي للبنين</p>
+        <p class="glow">مركز عمر بن مسعود للتعليم الأساسي للبنين</p>
     </header>
     
     <div class="datetime-bar fade-in">
@@ -538,7 +538,7 @@
     </main>
     
     <footer class="footer">
-        <p>جميع الحقوق محفوظة © مركزعمر بن مسعود للتعليم الأساسي ٢٠٢٥</p>
+        <p>جميع الحقوق محفوظة © مركز عمر مسعود للتعليم الأساسي ٢٠٢٥</p>
     </footer>
 
     <script>
@@ -557,14 +557,34 @@
 
         // دالة لعرض التاريخ باللغة العربية
         function formatToArabicDate(date) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric', numberingSystem: 'arab' };
-            return date.toLocaleDateString('ar-EG', options);
+            const day = date.getDate();
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            
+            const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", 
+                               "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+            
+            // تحويل الأرقام إلى أرقام عربية
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            const arabicDay = day.toString().replace(/\d/g, d => arabicNumbers[d]);
+            const arabicYear = year.toString().replace(/\d/g, d => arabicNumbers[d]);
+            
+            return `${arabicDay} ${monthNames[month]} ${arabicYear}`;
         }
 
         // دالة لعرض الوقت باللغة العربية
         function formatToArabicTime(date) {
-            const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', numberingSystem: 'arab' };
-            return date.toLocaleTimeString('ar-EG', options);
+            const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+            let timeStr = date.toLocaleTimeString('ar-EG', options);
+            
+            // تحويل الأرقام الإنجليزية إلى عربية
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            timeStr = timeStr.replace(/\d/g, d => arabicNumbers[d]);
+            
+            // استبدال AM/PM بنصوص عربية
+            timeStr = timeStr.replace('AM', 'ص').replace('PM', 'م');
+            
+            return timeStr;
         }
 
         // تحديث التاريخ والوقت
@@ -584,8 +604,20 @@
 
         // تحديث بيانات امتحان اليوم
         function updateTodayExam(now) {
-            const todayFormatted = formatToArabicDate(now);
-            let todayExam = examSchedule.find(exam => exam.date === todayFormatted);
+            const todayDay = now.getDate();
+            const todayMonth = now.getMonth();
+            const todayYear = now.getFullYear();
+            
+            // ابحث عن امتحان اليوم باستخدام التاريخ الإنجليزي للمقارنة
+            let todayExam = examSchedule.find(exam => {
+                const examDateParts = exam.date.split(' ');
+                const examDay = parseInt(examDateParts[0].replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+                const examMonth = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", 
+                                 "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"].indexOf(examDateParts[1]);
+                const examYear = parseInt(examDateParts[2].replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+                
+                return examDay === todayDay && examMonth === todayMonth && examYear === todayYear;
+            });
             
             const todayExamDiv = document.getElementById('today-exam');
             if (todayExam) {
@@ -604,15 +636,27 @@
 
         // تحديث مؤقت الامتحان
         function updateExamTimer(now) {
-            const todayFormatted = formatToArabicDate(now);
-            let todayExam = examSchedule.find(exam => exam.date === todayFormatted);
+            const todayDay = now.getDate();
+            const todayMonth = now.getMonth();
+            const todayYear = now.getFullYear();
+            
+            // ابحث عن امتحان اليوم باستخدام التاريخ الإنجليزي للمقارنة
+            let todayExam = examSchedule.find(exam => {
+                const examDateParts = exam.date.split(' ');
+                const examDay = parseInt(examDateParts[0].replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+                const examMonth = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", 
+                                 "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"].indexOf(examDateParts[1]);
+                const examYear = parseInt(examDateParts[2].replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+                
+                return examDay === todayDay && examMonth === todayMonth && examYear === todayYear;
+            });
             
             if (!todayExam) return;
             
             const examDateParts = todayExam.date.split(' ');
             const examDay = parseInt(examDateParts[0].replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
-            const monthNames = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
-            const examMonth = monthNames.indexOf(examDateParts[1]);
+            const examMonth = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", 
+                             "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"].indexOf(examDateParts[1]);
             const examYear = parseInt(examDateParts[2].replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
             
             const examStart = new Date(examYear, examMonth, examDay, 8, 0, 0);
@@ -634,8 +678,14 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
+                // تحويل الأرقام إلى عربية
+                const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+                const arabicHours = hours.toString().replace(/\d/g, d => arabicNumbers[d]);
+                const arabicMinutes = minutes.toString().replace(/\d/g, d => arabicNumbers[d]);
+                const arabicSeconds = seconds.toString().replace(/\d/g, d => arabicNumbers[d]);
+                
                 timerDisplay.textContent = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    `${arabicHours}:${arabicMinutes}:${arabicSeconds}`;
             } else if (now >= examStart && now < examEnd) {
                 // أثناء الامتحان
                 timerBox.style.display = 'block';
@@ -647,8 +697,14 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
+                // تحويل الأرقام إلى عربية
+                const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+                const arabicHours = hours.toString().replace(/\d/g, d => arabicNumbers[d]);
+                const arabicMinutes = minutes.toString().replace(/\d/g, d => arabicNumbers[d]);
+                const arabicSeconds = seconds.toString().replace(/\d/g, d => arabicNumbers[d]);
+                
                 timerDisplay.textContent = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    `${arabicHours}:${arabicMinutes}:${arabicSeconds}`;
                 
                 // إضافة تأثير النبض عند اقتراب نهاية الوقت
                 if (hours === 0 && minutes < 30) {
